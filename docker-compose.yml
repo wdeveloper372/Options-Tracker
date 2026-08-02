@@ -1,0 +1,20 @@
+#Here you define your blueprint for your application. 
+#This is a sample docker-compose file that defines services, networks, and volumes for your application. 
+
+
+
+
+version: '3.8'
+
+services:
+  my-db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      # You invent these values right here!
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
