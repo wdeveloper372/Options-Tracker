@@ -169,3 +169,6 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+
+#Ignore the Webull cache/token storage
+conf/token.txt
