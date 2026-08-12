@@ -11,3 +11,6 @@ An automated Python application designed to track, fetch, and log options tradin
 * Python (Webull SDK, MySQL Connector)
 * Docker & Docker Compose
 * MySQL
+
+
+Status: Active Development / Work in Progress 🚧
