@@ -172,3 +172,6 @@ pyrightconfig.json
 
 #Ignore the Webull cache/token storage
 conf/token.txt
+
+# Ignore Webull SDK logs
+webull_trade_sdk.log*
