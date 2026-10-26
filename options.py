@@ -12,6 +12,8 @@ import os
 import mysql.connector
 from dotenv import load_dotenv
 from fetch_webull import fetch_webull_trades
+from pypdf import PdfReader
+
 
 # Load secure credentials and configuration from the local .env file
 load_dotenv()
@@ -101,6 +103,11 @@ if orders_data:
 else:
     print("No order data returned.")
 
+
 # Cleanly close database connections
 cursor.close()
 mydb.close()
+
+
+if __name__ == "__main__":
+    pass
