@@ -29,9 +29,10 @@ mydb = mysql.connector.connect(
 )
 cursor = mydb.cursor()
 
-# 1. Create a clean table specifically for your options trades if it doesn't already exist
+# 1. Create a clean table specifically for your options trades if it doesn't already exist. Name of the table is 'options_trades'
 cursor.execute("""
-    CREATE TABLE IF NOT EXISTS options_trades (
+    CREATE TABLE IF NOT EXISTS options_trades ( 
+        client_order_id VARCHAR(100),
         id INT AUTO_INCREMENT PRIMARY KEY,
         symbol VARCHAR(50),
         option_type VARCHAR(20),
@@ -60,6 +61,7 @@ if orders_data:
             
             # Filter to only log successfully filled trades
             if status == "FILLED":
+                client_order_id = order.get("client_order_id")
                 symbol = order.get("symbol")
                 side = order.get("position_intent")  # e.g., 'BUY_TO_OPEN'
                 filled_price = order.get("filled_price")
@@ -78,10 +80,11 @@ if orders_data:
                 # 3. Format as a clean parameterized tuple to prevent SQL injection and syntax errors
                 sql = """
                     INSERT INTO options_trades 
-                    (symbol, option_type, strike_price, expire_date, side, filled_price, filled_quantity, status) 
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                    (client_order_id, symbol, option_type, strike_price, expire_date, side, filled_price, filled_quantity, status) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
                 trade_tuple = (
+                    client_order_id,
                     symbol, 
                     option_type, 
                     strike_price, 
@@ -94,7 +97,7 @@ if orders_data:
                 
                 # Execute the safe query insertion
                 cursor.execute(sql, trade_tuple)
-                print(f"✅ Logged: {symbol} Exp: {expire_date} Strike: ${strike_price} {option_type} ({side}) at ${filled_price}")
+                print(f"✅ Logged: {client_order_id}:{symbol} Exp: {expire_date} Strike: ${strike_price} {option_type} ({side}) at ${filled_price}")
                 
     # Commit all successful insertions to persist them in the database
     mydb.commit()

@@ -1,6 +1,6 @@
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
-from options import or
+# from options import or
 
 def create_pdf(filename, data):
     c = canvas.Canvas(filename)
